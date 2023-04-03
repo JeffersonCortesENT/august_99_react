@@ -9,7 +9,9 @@ const initialState = {
         limit: 10,
         order: 'desc',
     },
+    aSearchResult: [],
     bNoDataAvailable: true,
+    bInSearch: false,
 };
 
 export const getLaunchList = createAsyncThunk(
@@ -24,14 +26,22 @@ export const launchSlice = createSlice({
     name: 'launch',
     initialState,
     reducers: {
-        setOrderBy: (state, action) => {
+        searchList: (state, action) => {
             const { value } = action.payload;
+            let aLaunchTemp = [...state.aLaunches];
+            state.bInSearch = false;
+            if (value !== '') {
+                state.bInSearch = true;
+                let aFilteredResult = aLaunchTemp.filter((aData) => {
+                    return aData.mission_name === value;
+                });
+                state.aSearchResult = [...aFilteredResult];
+            }
         },
     },
     extraReducers: (builder) => {
         builder
-            // getApplicantsList
-            .addCase(getLaunchList.pending, (state, action) => {
+            .addCase(getLaunchList.pending, (state) => {
                 state.bLoading = true;
             })
             .addCase(getLaunchList.fulfilled, (state, action) => {
@@ -51,12 +61,14 @@ export const launchSlice = createSlice({
 });
 
 export const {
-    setOrderBy,
+    searchList,
 } = launchSlice.actions;
 
 export const selectLaunchList = (state) => state.launches.aLaunches;
 export const selectLoadingState = (state) => state.launches.bLoading;
 export const selectLaunchParams = (state) => state.launches.oSearchParameter;
 export const selectDataAvailabilityState = (state) => state.launches.bNoDataAvailable;
+export const selectSearchResult = (state) => state.launches.aSearchResult;
+export const selectInSearch = (state) => state.launches.bInSearch;
 
 export default launchSlice.reducer;
