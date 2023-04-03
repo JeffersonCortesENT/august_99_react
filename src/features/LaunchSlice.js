@@ -35,6 +35,7 @@ export const launchSlice = createSlice({
                 let aFilteredResult = aLaunchTemp.filter((aData) => {
                     return aData.mission_name === value;
                 });
+                console.log(aFilteredResult);
                 state.aSearchResult = [...aFilteredResult];
             }
         },

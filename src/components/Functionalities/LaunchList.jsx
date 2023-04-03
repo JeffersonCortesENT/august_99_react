@@ -31,7 +31,7 @@ const LaunchList = () => {
     } else {
       setLaunchData(aLaunchList);
     }
-  }, [bInSearch, aLaunchList]);
+  }, [bInSearch, aLaunchList, aSearchResult]);
 
   return (
     <div className='launch-list' onScroll={handleScroll}>
