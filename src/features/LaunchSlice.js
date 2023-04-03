@@ -30,12 +30,12 @@ export const launchSlice = createSlice({
             const { value } = action.payload;
             let aLaunchTemp = [...state.aLaunches];
             state.bInSearch = false;
+            let oSearch = new RegExp(value , 'i');
             if (value !== '') {
                 state.bInSearch = true;
                 let aFilteredResult = aLaunchTemp.filter((aData) => {
-                    return aData.mission_name === value;
+                    return oSearch.test(aData.mission_name);
                 });
-                console.log(aFilteredResult);
                 state.aSearchResult = [...aFilteredResult];
             }
         },
