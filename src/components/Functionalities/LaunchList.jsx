@@ -56,7 +56,7 @@ const LaunchList = () => {
           )
           : 
           (
-            <h1>No Data Available!</h1>
+            bLoading === false && <h1>No Data Available!</h1>
           )
 
         }
